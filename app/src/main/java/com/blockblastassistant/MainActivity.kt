@@ -205,4 +205,45 @@ private var selectedScreenshot: Bitmap? = null
             result.text = "Hesaplama hatası: ${e.message}"
         }
     }
+@Suppress("DEPRECATION")
+override fun onActivityResult(
+    requestCode: Int,
+    resultCode: Int,
+    data: Intent?
+) {
+    super.onActivityResult(requestCode, resultCode, data)
+
+    if (requestCode == PICK_IMAGE &&
+        resultCode == RESULT_OK &&
+        data?.data != null
+    ) {
+        try {
+            val uri: Uri = data.data!!
+            val bitmap = contentResolver.openInputStream(uri)?.use {
+                BitmapFactory.decodeStream(it)
+            }
+
+            if (bitmap == null) {
+                result.text = "Görüntü açılamadı."
+                return
+            }
+
+            selectedScreenshot = bitmap
+            val recognized = ScreenshotRecognizer.recognizeBoard(bitmap)
+
+            for (r in 0 until 8) {
+                for (c in 0 until 8) {
+                    board[r][c] = recognized[r][c]
+                    updateCell(r, c)
+                }
+            }
+
+            result.text =
+                "Tahta görüntüden analiz edildi. " +
+                "Kareleri kontrol et ve gerekirse düzelt."
+
+        } catch (e: Exception) {
+            result.text = "Görüntü okunamadı: ${e.message}"
+        }
+    }
 }
