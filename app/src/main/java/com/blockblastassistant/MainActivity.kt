@@ -18,6 +18,8 @@ class MainActivity : Activity() {
     private val boardButtons = Array(8) { arrayOfNulls<Button>(8) }
 
     private val shapes = listOf(
+private val PICK_IMAGE = 1001
+private var selectedScreenshot: Bitmap? = null
         Piece(listOf(Cell(0,0))),
         Piece(listOf(Cell(0,0), Cell(0,1))),
         Piece(listOf(Cell(0,0), Cell(1,0))),
