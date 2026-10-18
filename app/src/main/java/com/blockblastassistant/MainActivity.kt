@@ -7,6 +7,10 @@ import android.graphics.Color
 import android.view.Gravity
 import android.widget.*
 import android.view.ViewGroup
+import android.content.Intent
+import android.graphics.Bitmap
+import android.graphics.BitmapFactory
+import android.net.Uri
 
 class MainActivity : Activity() {
 
