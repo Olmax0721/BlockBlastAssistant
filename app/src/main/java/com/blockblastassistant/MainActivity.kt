@@ -43,7 +43,15 @@ private var selectedScreenshot: Bitmap? = null
     private lateinit var selectors: List<Spinner>
     private lateinit var result: TextView
 
-    override fun onCreate(savedInstanceState: Bundle?) {
+    override fun onCreate(savedInstanceState: Bundle?) {root.addView(Button(this).apply {
+    text = "Ekran görüntüsü seç ve tahtayı tanı"
+    setOnClickListener {
+        val intent = Intent(Intent.ACTION_GET_CONTENT).apply {
+            type = "image/*"
+        }
+        startActivityForResult(intent, PICK_IMAGE)
+    }
+})
         super.onCreate(savedInstanceState)
 
         val root = LinearLayout(this).apply {
